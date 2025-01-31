@@ -13,16 +13,12 @@ function Page() {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
-    if (state?.success) {
+    if (!state?.fieldErrors) {
       setIsSuccess(true);
-
-      const timer = setTimeout(() => {
-        setIsSuccess(false);
-      }, 3000);
-
+      const timer = setTimeout(() => setIsSuccess(false), 3000);
       return () => clearTimeout(timer);
     }
-  }, [state?.success]);
+  }, [state]);
 
   return (
     <form className='flex flex-col gap-3 w-3/5 mx-auto mt-32' action={action}>
@@ -31,13 +27,15 @@ function Page() {
         type='email'
         required={true}
         placeholder='Email'
+        errors={state?.fieldErrors?.email}
         icon={<Email size={'1.2rem'} />}
       />
       <FormInput
-        name='user'
+        name='username'
         type='string'
         required={true}
         placeholder='User'
+        errors={state?.fieldErrors?.username}
         icon={<User size={'1.2rem'} />}
       />
       <FormInput
@@ -45,7 +43,7 @@ function Page() {
         type='string'
         required={true}
         placeholder='Password'
-        errors={state?.errors ?? []}
+        errors={state?.fieldErrors?.password}
         icon={<Key size={'1.2rem'} />}
       />
       <FormButton label='Login' />
