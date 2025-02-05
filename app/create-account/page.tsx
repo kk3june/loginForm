@@ -1,14 +1,15 @@
 'use client';
 
-import { logIn } from '@/app/login/action';
+import { createAccount } from '@/app/create-account/action';
 import FormButton from '@/components/buttons/form-button';
 import Email from '@/components/icons/Email';
 import Key from '@/components/icons/Key';
+import User from '@/components/icons/User';
 import FormInput from '@/components/input/form-input';
 import { useActionState, useEffect, useState } from 'react';
 
 function Page() {
-  const [state, dispatch] = useActionState(logIn, null);
+  const [state, dispatch] = useActionState(createAccount, null);
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
@@ -32,6 +33,14 @@ function Page() {
           icon={<Email size={'1.2rem'} />}
         />
         <FormInput
+          name='username'
+          type='string'
+          required={true}
+          placeholder='User'
+          errors={state?.fieldErrors?.username}
+          icon={<User size={'1.2rem'} />}
+        />
+        <FormInput
           name='password'
           type='string'
           required={true}
@@ -39,10 +48,18 @@ function Page() {
           errors={state?.fieldErrors?.password}
           icon={<Key size={'1.2rem'} />}
         />
-        <FormButton label='Login' />
+        <FormInput
+          name='confirm_password'
+          type='string'
+          required={true}
+          placeholder='Confirm Password'
+          errors={state?.fieldErrors?.password}
+          icon={<Key size={'1.2rem'} />}
+        />
+        <FormButton label='SignUp' />
         {isSuccess && (
           <span className='w-full px-5 py-2 bg-green-600 rounded-2xl font-semibold'>
-            Welcome back
+            You have successfully created an account.
           </span>
         )}
       </form>
