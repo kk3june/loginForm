@@ -4,7 +4,6 @@ import { notFound, redirect } from 'next/navigation';
 
 async function getUser() {
   const session = await getSession();
-  console.log('Session:', session); // 세션 데이터 확인
 
   if (session.id) {
     const user = await db.user.findUnique({
@@ -12,7 +11,6 @@ async function getUser() {
         id: session.id,
       },
     });
-    console.log('User data:', user); // user 데이터 확인
 
     if (user) {
       return user;
